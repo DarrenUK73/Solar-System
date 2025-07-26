@@ -19,13 +19,10 @@ class Planets:
         self.moons = moons
 
 class Questions:
-    def __init__(self, questionno=0, questiontext=""):
-        boolvar=tk.BooleanVar
+    def __init__(self, questionno, questiontext):
         self.questionno = questionno
         self.questiontext = questiontext
-        self.cb = tk.Checkbutton(root, variable=boolvar, text=questiontext, anchor='w') #stack overflow
-        self.cb.grid(row=int(questionno)+7, columnspan=2, sticky='we') #stack overflow
-
+        
 ####### https://blog.finxter.com/ ########
 
 #read in CSVs and add class instances
@@ -47,12 +44,13 @@ with open('planetquestions.csv', newline='') as csvfile:
 
 
 def on_submit():
-    #to be run when the user submits the form
-    planet = planet_var.get()
-    # question1 = question1_var.get()
-    # question2 = question2_var.get()
-    # question3 = question3_var.get()
+    pass
+    
+def on_cancel():
+    pass
 
+def on_exit():
+    pass
 
 #Python GUI Programming with Tkinter - Alan D. Moore
 
@@ -64,16 +62,34 @@ planet_choices = []
 
 for i in range(0,len(planets)):
     planet_choices.append(planets[i].name)
-
+    print(planets[i].name)
 planet_inp = ttk.Combobox(root, textvariable=planet_var, values=planet_choices)
-
-submit_btn = tk.Button(root, text='Submit Questions')
 
 planet_label.grid(row=4, sticky=tk.W, pady=10)
 planet_inp.grid(row=4, column=2, sticky=tk.W + tk.E, padx=25)
 
-submit_btn.grid(row=99)
+qu1_var = tk.BooleanVar()
+qu1 = tk.Checkbutton(root, variable=qu1_var, text=questions[0].questiontext, anchor='w')
+qu1.grid(row=7, columnspan=2, sticky='we')
 
+qu2_var = tk.BooleanVar()
+qu2 = tk.Checkbutton(root, variable=qu2_var, text=questions[1].questiontext, anchor='w')
+qu2.grid(row=8, columnspan=2, sticky='we')
+
+qu3_var = tk.BooleanVar()
+qu3 = tk.Checkbutton(root, variable=qu3_var, text=questions[2].questiontext, anchor='w')
+qu3.grid(row=9, columnspan=2, sticky='we')
+
+submit_btn = tk.Button(root, text='OK')
+submit_btn.grid(row=99, column=0, pady=250)
 submit_btn.configure(command=on_submit)
+
+cancel_btn = tk.Button(root, text='Cancel')
+cancel_btn.grid(row=99, column=1, pady=250)
+cancel_btn.configure(command=on_cancel)
+
+exit_btn = tk.Button(root, text='Exit')
+exit_btn.grid(row=99, column=2, pady=250)
+exit_btn.configure(command=on_exit)
 
 root.mainloop()
