@@ -44,8 +44,25 @@ with open('planetquestions.csv', newline='') as csvfile:
 
 
 def on_submit():
-    pass
-    
+
+    answers = [qu1_var.get(),qu2_var.get(),qu3_var.get()]
+    answer_text = []
+    result = tk.Tk()
+
+    result.title('Answers')
+    result.geometry('640x480+300+300')
+    result.resizable(False,False)
+    title = tk.Label(result, text='Answers', font=('Arial 16 bold'),bg='black',fg='blue')
+    title.grid(columnspan=2)
+
+    for i in range(0,len(planets)):
+        if planet_var.get() == planets[i].name:
+            answer_text= [planets[i].mass,planets[i].moons]
+
+    for i in range(0,len(answers)):
+        if answers[i] == True:
+            print(answer_text[i])
+
 def on_cancel():
     pass
 
@@ -62,7 +79,7 @@ planet_choices = []
 
 for i in range(0,len(planets)):
     planet_choices.append(planets[i].name)
-    print(planets[i].name)
+
 planet_inp = ttk.Combobox(root, textvariable=planet_var, values=planet_choices)
 
 planet_label.grid(row=4, sticky=tk.W, pady=10)
@@ -79,6 +96,7 @@ qu2.grid(row=8, columnspan=2, sticky='we')
 qu3_var = tk.BooleanVar()
 qu3 = tk.Checkbutton(root, variable=qu3_var, text=questions[2].questiontext, anchor='w')
 qu3.grid(row=9, columnspan=2, sticky='we')
+
 
 submit_btn = tk.Button(root, text='OK')
 submit_btn.grid(row=99, column=0, pady=250)
