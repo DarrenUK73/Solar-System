@@ -6,45 +6,55 @@ from tkinter.ttk import *
 import csv
 
 class Planets:
-    def __init__(self, name="", mass=0, moons=""): 
+    def __init__(self, name="", mass=0, noofmoons=""): 
         self.name = name
         self.mass = mass
-        self.moons = moons
+        self.noofmoons = noofmoons
+        #self.moons = moons
+
+    def moons(self):
+        print(self)
+        #list[self.Moons.moonname]
+
+class Moons:
+    def __init__(self, planet="", moonname=""):
+        self.planet = planet
+        self.moonname = moonname
 
 class Questions:
-    def __init__(self, questionno, questiontext, answertext, selected):
+    def __init__(self, questionno, questiontext,answertext):
         self.questionno = questionno
         self.questiontext = questiontext
         self.answertext = answertext
-        self.selected = selected
-
 
 ####### https://blog.finxter.com/ ########
 
 #read in CSVs and add class instances
 root = tk.Tk()
-
 root.title('Solar System Enquiry')
 root.geometry('640x480+300+300')
 root.resizable(False,False)
 title = tk.Label(root, text='Solar System Knowledge Base', font=('Arial 16 bold'),bg='black',fg='blue')
 title.grid(columnspan=2)
 
-#selected_questions = [False,False,False]
 selected_questions = {}
-
 planets = []
 questions = []
 
 with open('Planets.csv', newline='') as csvfile:
     reader = csv.DictReader(csvfile)
     for row in reader:
-        planets.append(Planets(row['name'], row['mass'], row['moons']))
+        planets.append(Planets(row['name'], row['mass'], row['noofmoons']))
 
 with open('planetquestions.csv', newline='') as csvfile:
     reader = csv.DictReader(csvfile)
     for row in reader:
-        questions.append(Questions(row['questionno'], row['questiontext'], row['answertext'], row['selected']))
+        questions.append(Questions(row['questionno'], row['questiontext'], row['answertext']))
+
+with open('moon.csv', newline='') as csvfile:
+    reader = csv.DictReader(csvfile)
+    for row in reader:
+        questions.append(Moons(row['planet'], row['moonname']))
 
 ############################################
 
@@ -70,8 +80,8 @@ def on_submit():
         title = tk.Label(result, text='Answers', font=('Arial 16 bold'),bg='black',fg='blue')
         title.grid(columnspan=2)
 
-        answer_text = [planets[ind].mass,planets[ind].moons]
-
+        answer_text = [planets[ind].mass,planets[ind].noofmoons]
+        print(answer_text)
         for i in range(0,len(answers)):
             if answers[i] == True:
                 print(answer_text[i])
@@ -100,7 +110,7 @@ def on_click(state,qu_ind):
 
     if planet_var.get() in list(planet_dict.keys()):
         pl_ind = planet_dict[planet_var.get()]
-
+    
     if state==True:
         answer_string = planet_var.get()+' '+questions[qu_ind].answertext
         selected_questions[qu_ind]=answer_string
@@ -109,7 +119,7 @@ def on_click(state,qu_ind):
 
     
     print(selected_questions)
-
+    print(planets[pl_ind].moons)
 
 #Python GUI Programming with Tkinter - Alan D. Moore
 
@@ -121,7 +131,7 @@ planet_dict = {}
 
 for i in range(0,len(planets)):
     planet_dict[planets[i].name] = i
-    
+    #print(planets[i].moons())
 planet_inp = ttk.Combobox(root, textvariable=planet_var, values=list(planet_dict.keys()))
 
 planet_label.grid(row=4, sticky=tk.W, pady=10)
