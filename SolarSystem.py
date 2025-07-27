@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import * 
+from tkinter import messagebox
 from tkinter import ttk
 from tkinter.ttk import * 
 import csv
@@ -45,24 +46,34 @@ with open('planetquestions.csv', newline='') as csvfile:
 
 def on_submit():
 
-    answers = [qu1_var.get(),qu2_var.get(),qu3_var.get()]
-    answer_text = []
-    result = tk.Tk()
+    if planet_var.get() in planet_choices:
 
-    result.title('Answers')
-    result.geometry('640x480+300+300')
-    result.resizable(False,False)
-    title = tk.Label(result, text='Answers', font=('Arial 16 bold'),bg='black',fg='blue')
-    title.grid(columnspan=2)
+        answers = [qu1_var.get(),qu2_var.get(),qu3_var.get()]
+        answer_text = []
+        result = tk.Tk()
 
-    for i in range(0,len(planets)):
-        if planet_var.get() == planets[i].name:
-            answer_text= [planets[i].mass,planets[i].moons]
+        result.title('Answers')
+        result.geometry('640x480+300+300')
+        result.resizable(False,False)
+        title = tk.Label(result, text='Answers', font=('Arial 16 bold'),bg='black',fg='blue')
+        title.grid(columnspan=2)
 
-    for i in range(0,len(answers)):
-        if answers[i] == True:
-            print(answer_text[i])
+        for i in range(0,len(planets)):
+            if planet_var.get() == planets[i].name:
+                answer_text= [planets[i].mass,planets[i].moons]
 
+        for i in range(0,len(answers)):
+            if answers[i] == True:
+                print(answer_text[i])
+
+    else:
+        messagebox.showerror(
+            title='Invalid Planet Name',
+            message=planet_var.get()+' is not a planet in the Solar System',
+            detail='Please select from the list'
+        )
+        return False
+    
 def on_cancel():
     pass
 
