@@ -1,9 +1,9 @@
-name,mass,noofmoons
-Mercury,3.3011×10p23,0
-Venus,4.8675×10p24,0
-Earth,5.972168×10p24,1
-Mars,6.4171×10p23,2
-Jupiter,1.8982×10p27,97
-Saturn,5.6834×10p26,274
-Uranus,(8.6810±0.0013)×10p25,28
-Neptune,1.02409×10p26,16
+planet,mass,noofmoons,moonlist
+Mercury,3.3011×10^23,0,""
+Venus,4.8675×10^24,0,""
+Earth,5.972168×10^24,1,"The Moon"
+Mars,6.4171×10^23,2,"Phobos,Deimos"
+Jupiter,1.8982×10^27,97,"Himalia,Elara,Pasiphea,Sinope,Io,Europa,Callisto"
+Saturn,5.6834×10^26,274,"Titan,Dione,Enceladus,Epimethius,Prometheus,Mimas,Rhea"
+Uranus,(8.6810±0.0013)×10^25,28,"Titania,Oberon,Bianca,Cressida,Desdamona,Juliet"
+Neptune,1.02409×10^26,16,"Naiad,Thalassa,Despina,Galatea,Larissa,Hippocamp"
