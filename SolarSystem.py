@@ -10,11 +10,12 @@ class Planets:
         self.name = name
         self.mass = mass
         self.noofmoons = noofmoons
-        #self.moons = moons
 
-    def moons(self):
-        print(self)
-        #list[self.Moons.moonname]
+    def moons(self,pl_name):
+        self.moonplanet = pl_name
+
+        # if pl_name == self.name:
+        #     self.moons = Moons().moonname
 
 class Moons:
     def __init__(self, planet="", moonname=""):
@@ -117,9 +118,15 @@ def on_click(state,qu_ind):
     else:
         del selected_questions[qu_ind] #stack overflow
 
+    pl_name = Planets()
+    pl_name.name = "Earth"
+    pl_name.mass ="10"
+    pl_name.noofmoons = "2"
+    pl_name.moons(pl_name.name)
+    print(pl_name.moonplanet)
     
     print(selected_questions)
-    print(planets[pl_ind].moons)
+    
 
 #Python GUI Programming with Tkinter - Alan D. Moore
 
