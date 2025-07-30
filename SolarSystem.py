@@ -12,11 +12,21 @@ class Planets:
         self.noofmoons = noofmoons
         self.moonlist = moonlist
 
+    def getanswers(self):
+        planet_data = [self.mass,self.noofmoons]
+        return planet_data
+
 class Questions:
     def __init__(self, questionno, questiontext,answertext):
         self.questionno = questionno
         self.questiontext = questiontext
         self.answertext = answertext
+
+    def buildanswer(self, state):
+        if state==True:
+            selected_questions[self.questionno]=self.answertext
+        else:
+            del selected_questions[self.questionno] #stack overflow
 
 ####### https://blog.finxter.com/ ########
 
@@ -31,7 +41,6 @@ title.grid(columnspan=2)
 selected_questions = {}
 planets = []
 questions = []
-moons=[]
 
 with open('Planets.csv', newline='') as csvfile:
     reader = csv.DictReader(csvfile)
@@ -46,39 +55,26 @@ with open('planetquestions.csv', newline='') as csvfile:
 ############################################
 
 def on_submit():
-
     #check the planet is valid before proceeding
-
-    print(planets[3].moonlist)
 
     if planet_var.get() in list(planet_dict.keys()):
         ind = planet_dict[planet_var.get()]
         
         #load boolean answers into a list to match the attributes from the Planets class
-        answers = [qu1_var.get(),qu2_var.get(),qu3_var.get()]
+        #answers = [qu1_var.get(),qu2_var.get(),qu3_var.get()]
+        planet_data = planets[ind].getanswers()
         
-        #list of values from the Planets class
-        answer_text = []
-        result = tk.Tk()
+        qu_keys = list(selected_questions.keys())
+        print(qu_keys)
+        answerstring = []
+        for i in qu_keys:
+            answerstring.append(planet_data[int(i)-1]) 
 
-        result.title('Answers')
-        result.geometry('640x480+300+300')
-        result.resizable(False,False)
-        title = tk.Label(result, text='Answers', font=('Arial 16 bold'),bg='black',fg='blue')
-        title.grid(columnspan=2)
-
-        answer_text = [planets[ind].mass,planets[ind].noofmoons]
-
-        print(answer_text)
-        for i in range(0,len(answers)):
-            if answers[i] == True:
-                print(answer_text[i])
-        
-        #mylabel = ttk.Label(result, text=questions[ind].answertext+' '+answer_text[i])
-
-        exitres_btn = tk.Button(result, text='Exit')
-        exitres_btn.grid(row=99, column=1, pady=250)
-        exitres_btn.configure(command=result.destroy)
+        messagebox.showinfo(
+            title='Answers',
+            message=f'Here is the result of you enquiry for planet {planet_var.get()}',
+            detail=answerstring
+        )
 
     else:
         messagebox.showerror(
@@ -95,16 +91,7 @@ def on_cancel():
     planet_var.set('Mercury')
 
 def on_click(state,qu_ind):
-
-    if planet_var.get() in list(planet_dict.keys()):
-        pl_ind = planet_dict[planet_var.get()]
-    
-    if state==True:
-        answer_string = planet_var.get()+' '+questions[qu_ind].answertext
-        selected_questions[qu_ind]=answer_string
-    else:
-        del selected_questions[qu_ind] #stack overflow
-
+    questions[qu_ind].buildanswer(state)
     print(selected_questions)
    
 #Python GUI Programming with Tkinter - Alan D. Moore
@@ -114,7 +101,6 @@ planet_label = tk.Label(root, text='Please select a planet')
 
 #add choices
 planet_dict = {}
-
 for i in range(0,len(planets)):
     planet_dict[planets[i].planet] = i
     #print(planets[i].moons())
