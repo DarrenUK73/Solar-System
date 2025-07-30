@@ -14,7 +14,7 @@ class Planets:
         self.moonlist = moonlist
 
     def getanswers(self):
-        planet_data = [self.mass,self.noofmoons,self.distance]
+        planet_data = [self.mass,self.noofmoons,self.distance,self.moonlist]
         return planet_data
 
 class Questions:
@@ -58,24 +58,22 @@ with open('planetquestions.csv', newline='') as csvfile:
 
 def on_submit():
     #check the planet is valid before proceeding
-
     if planet_var.get() in list(planet_dict.keys()):
         ind = planet_dict[planet_var.get()]
 
         sorted_questions = dict(sorted(selected_questions.items()))
         planet_data = planets[ind].getanswers()
+        print(planet_data)
         qu_keys = list(sorted_questions.keys())
-        answerstring = []
+        answerstring = ''
         answertext1 =''
         answertext2 =''
         qu_ind = ''
-        print(qu_ind)
-        print(planet_data)
         for i in range(len(qu_keys)):
             qu_ind = str(qu_keys[int(i)])
             answertext1 = sorted_questions[qu_ind]
             answertext2 = planet_data[int(qu_ind)-1]
-            answerstring.append(answertext1+' '+answertext2) 
+            answerstring = answerstring+answertext1+' '+answertext2+'\n'
 
         messagebox.showinfo(
             title='Answers',
@@ -97,18 +95,20 @@ def on_cancel():
     qu1_var.set(False)
     qu2_var.set(False)
     qu3_var.set(False)
+    qu4_var.set(False)
     planet_var.set('Mercury')
 
 def on_click(state,qu_ind):
     questions[qu_ind].buildanswer(state)
     
-    if bool(selected_questions)==False:
-        submit_btn.configure(state=DISABLED)
+    if bool(selected_questions)==False: #bool - stack overflow
+        submit_btn.configure(state=DISABLED) #state - stack overflow
     else:
         submit_btn.configure(state=NORMAL)
 
    
-#Python GUI Programming with Tkinter - Alan D. Moore
+# Screen, widgets and message boxes from
+# Python GUI Programming with Tkinter - Alan D. Moore
 
 #initialise the combo box 
 planet_var = tk.StringVar(value='Mercury')
@@ -138,6 +138,11 @@ qu3_var = tk.BooleanVar()
 qu3 = tk.Checkbutton(root, variable=qu3_var, text=questions[2].questiontext, anchor='w', 
                      command=lambda:on_click(qu3_var.get(),2))
 qu3.grid(row=9, columnspan=2, sticky='we')
+
+qu4_var = tk.BooleanVar()
+qu4 = tk.Checkbutton(root, variable=qu4_var, text=questions[3].questiontext, anchor='w', 
+                     command=lambda:on_click(qu4_var.get(),3))
+qu4.grid(row=10, columnspan=2, sticky='we')
 
 #### lambda from stack overflow #####
 
