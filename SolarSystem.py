@@ -6,16 +6,22 @@ from tkinter.ttk import *
 import csv
 
 class Planets:
-    def __init__(self, planet="", mass=0, noofmoons=0, distance=0, moonlist=[]): 
+    def __init__(self, planet="", mass=0, noofmoons=0, distance="", area="", orbit="", moonlist=[]): 
         self.planet = planet
         self.mass = mass
         self.noofmoons = noofmoons
         self.distance = distance
+        self.area = area
+        self.orbit = orbit
         self.moonlist = moonlist
 
     def getanswers(self):
-        planet_data = [self.mass,self.noofmoons,self.distance,self.moonlist]
+        planet_data = [self.mass,self.noofmoons,self.distance,self.area,self.orbit,self.moonlist]
         return planet_data
+    
+    def validplanet(self):
+        print(self.planet) 
+
 
 class Questions:
     def __init__(self, questionno, questiontext,answertext):
@@ -28,6 +34,11 @@ class Questions:
             selected_questions[self.questionno]=self.answertext
         else:
             del selected_questions[self.questionno] #stack overflow
+
+        if bool(selected_questions)==False: #bool - stack overflow
+            submit_btn.configure(state=DISABLED) #state - stack overflow
+        else:
+            submit_btn.configure(state=NORMAL)
 
 ####### https://blog.finxter.com/ ########
 
@@ -47,7 +58,7 @@ questions = []
 with open('Planets.csv', newline='') as csvfile:
     reader = csv.DictReader(csvfile)
     for row in reader:
-        planets.append(Planets(row['planet'], row['mass'], row['noofmoons'], row['distance'], row['moonlist']))
+        planets.append(Planets(row['planet'], row['mass'], row['noofmoons'], row['distance'], row['area'],row['orbit'],row['moonlist']))
 
 with open('planetquestions.csv', newline='') as csvfile:
     reader = csv.DictReader(csvfile)
@@ -56,7 +67,11 @@ with open('planetquestions.csv', newline='') as csvfile:
 
 ############################################
 
+
 def on_submit():
+    inputplanet = planet_var.get()
+    #inputplanet.validplanet(inputplanet)
+
     #check the planet is valid before proceeding
     if planet_var.get() in list(planet_dict.keys()):
         ind = planet_dict[planet_var.get()]
@@ -96,15 +111,17 @@ def on_cancel():
     qu2_var.set(False)
     qu3_var.set(False)
     qu4_var.set(False)
+    qu5_var.set(False)
+    qu6_var.set(False)
     planet_var.set('Mercury')
 
 def on_click(state,qu_ind):
     questions[qu_ind].buildanswer(state)
     
-    if bool(selected_questions)==False: #bool - stack overflow
-        submit_btn.configure(state=DISABLED) #state - stack overflow
-    else:
-        submit_btn.configure(state=NORMAL)
+    # if bool(selected_questions)==False: #bool - stack overflow
+    #     submit_btn.configure(state=DISABLED) #state - stack overflow
+    # else:
+    #     submit_btn.configure(state=NORMAL)
 
    
 # Screen, widgets and message boxes from
@@ -144,18 +161,28 @@ qu4 = tk.Checkbutton(root, variable=qu4_var, text=questions[3].questiontext, anc
                      command=lambda:on_click(qu4_var.get(),3))
 qu4.grid(row=10, columnspan=2, sticky='we')
 
+qu5_var = tk.BooleanVar()
+qu5 = tk.Checkbutton(root, variable=qu5_var, text=questions[4].questiontext, anchor='w', 
+                     command=lambda:on_click(qu5_var.get(),4))
+qu5.grid(row=11, columnspan=2, sticky='we')
+
+qu6_var = tk.BooleanVar()
+qu6 = tk.Checkbutton(root, variable=qu6_var, text=questions[5].questiontext, anchor='w', 
+                     command=lambda:on_click(qu6_var.get(),5))
+qu6.grid(row=12, columnspan=2, sticky='we')
+
 #### lambda from stack overflow #####
 
 submit_btn = tk.Button(root, text='OK')
-submit_btn.grid(row=99, column=0, pady=250)
+submit_btn.grid(row=20, column=0, pady=25)
 submit_btn.configure(command=on_submit, state=DISABLED)
 
 cancel_btn = tk.Button(root, text='Cancel')
-cancel_btn.grid(row=99, column=1, pady=250)
+cancel_btn.grid(row=20, column=1, pady=25)
 cancel_btn.configure(command=on_cancel)
 
 exit_btn = tk.Button(root, text='Exit')
-exit_btn.grid(row=99, column=2, pady=250)
+exit_btn.grid(row=20, column=2, pady=25)
 exit_btn.configure(command=root.destroy)
 
 root.mainloop()

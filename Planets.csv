@@ -1,9 +1,9 @@
-planet,mass,noofmoons,distance,moonlist
-Mercury,3.3011×10^23,0,0.39,""
-Venus,4.8675×10^24,0,0.72,""
-Earth,5.972168×10^24,1,1,"The Moon"
-Mars,6.4171×10^23,2,1.52,"Phobos,Deimos"
-Jupiter,1.8982×10^27,97,5.20,"Himalia,Elara,Pasiphea,Sinope,Io,Europa,Callisto"
-Saturn,5.6834×10^26,274,9.54,"Titan,Dione,Enceladus,Epimethius,Prometheus,Mimas,Rhea"
-Uranus,(8.6810±0.0013)×10^25,28,19.2,"Titania,Oberon,Bianca,Cressida,Desdamona,Juliet"
-Neptune,1.02409×10^26,16,30.06,"Naiad,Thalassa,Despina,Galatea,Larissa,Hippocamp"
+planet,mass,noofmoons,distance,area,orbit,moonlist
+Mercury,3.3011×10^23,0,0.39 AU,78.2 million km^2,0.24 Earth Years,""
+Venus,4.8675×10^24,0,0.72 AU,460.2 million km^2,0.62 Earth Years,""
+Earth,5.972168×10^24,1,1 AU,510.1 million km^2,1 Earth Years,"The Moon"
+Mars,6.4171×10^23,2,1.52 AU,144.4 million km^2,1.88 Earth Years,"Phobos,Deimos"
+Jupiter,1.8982×10^27,97,5.20 AU,61.42 billion km^2,11.86 Earth Years,"Himalia,Elara,Pasiphea,Sinope,Io,Europa,Callisto"
+Saturn,5.6834×10^26,274,9.54 AU,42.7 billion km^2,29.46 Earth Years,"Titan,Dione,Enceladus,Epimethius,Prometheus,Mimas,Rhea"
+Uranus,(8.6810±0.0013)×10^25,28,19.2 AU,8.083 billion km^2,84 Earth Years,"Titania,Oberon,Bianca,Cressida,Desdamona,Juliet"
+Neptune,1.02409×10^26,16,30.06 AU,7.618 billion km^2,164.8 Earth Years,"Naiad,Thalassa,Despina,Galatea,Larissa,Hippocamp"
