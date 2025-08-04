@@ -7,13 +7,16 @@ class JSONVar(tk.StringVar):
     def __init__(self, *args, **kwargs):
         kwargs['value'] = json.dumps(kwargs.get('value'))
         super().__init__(*args, **kwargs)
+        #print(kwargs)
 
     def set(self, value, *args, **kwargs):
         string = json.dumps(value)
+        print(string)
         super().set(string, *args, **kwargs)
 
     def get(self, *args, **kwargs):
         string = super().get(*args, **kwargs)
+        print(string)
         return json.loads(string)
     
 class LabelInput(tk.Frame):
@@ -37,7 +40,6 @@ class MyForm(tk.Frame):
     def __init__(self, parent, data_var, *args, **kwargs):
         super().__init__(parent, *args, **kwargs)
         self.data_var = data_var
-            
         self._vars = {
         'name': tk.StringVar(self),
         'age' :tk.IntVar(self, value=2)
@@ -55,8 +57,10 @@ class MyForm(tk.Frame):
         tk.Button(self, text='Submit', command=self._on_submit).grid()
 
     def _on_submit(self):
+            #print(self._vars.items())
             data = {key : var.get() for key, var in self._vars.items()}
             self.data_var.set(data)
+            print(data)
 
 class Application(tk.Tk):
     """A simple form application"""
@@ -66,7 +70,8 @@ class Application(tk.Tk):
 
         self.jsonvar = JSONVar(self)
         self.outpur_var = tk.StringVar(self)
-
+        #print('Self JSONVAR =')
+        #print(self.jsonvar)
         tk.Label(self, text='Please fill the form').grid(sticky='ew')
         MyForm(self, self.jsonvar).grid(sticky='nsew')
         tk.Label(self, textvariable=self.outpur_var).grid(sticky='ew')
@@ -77,6 +82,7 @@ class Application(tk.Tk):
 
     def _on_data_change(self, *args, **kwargs):
         data = self.jsonvar.get()
+        #print(data)
         output = ''.join([
             f'{key} = {value}\n'
             for key, value in data.items()
