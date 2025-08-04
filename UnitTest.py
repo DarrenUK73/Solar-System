@@ -13,11 +13,17 @@ class PlanetsTestCase(unittest.TestCase):
 
 class SimpleTestCase(unittest.TestCase):
     def setUp(self):
-        self.questions = Questions("1", "What is the planet mass?", "Mass is")
+        self.questions1 = Questions("1", "What is the planet mass?", "Mass is")
+        self.questions2 = Questions("2", "What is the number of moons?", "Number of moons is")
 
     def test_multiply(self):
-        self.questions.buildanswer(True,selected_questions,tk.Button(root, text='OK'))
-        assert selected_questions[self.questions.questionno]=='Mass is'
+        self.questions1.buildanswer(True,selected_questions,tk.Button(root, text='OK'))
+        assert selected_questions[self.questions1.questionno]=='Mass is'
+
+        self.questions2.buildanswer(True,selected_questions,tk.Button(root, text='OK'))
+        assert selected_questions[self.questions2.questionno]=="Number of moons is"
+
+        assert selected_questions =={'1': 'Mass is', '2': 'Number of moons is'}
 
 if __name__ == "__main__":
     root = tk.Tk()

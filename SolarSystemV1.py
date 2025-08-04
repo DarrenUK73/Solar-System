@@ -36,7 +36,6 @@ class Questions:
             imp_submit_btn.configure(state=DISABLED) #state - stack overflow
         else:
             imp_submit_btn.configure(state=NORMAL)
-        print(selected_questions)
 
 def completeanswer(planet_ind):
     answerstring = ''
