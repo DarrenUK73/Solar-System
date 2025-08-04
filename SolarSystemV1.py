@@ -19,10 +19,6 @@ class Planets:
     def getanswers(self):
         planet_data = [self.mass,self.noofmoons,self.distance,self.area,self.orbit,self.moonlist]
         return planet_data
-    
-    def validplanet(self):
-        print(self.planet) 
-
 
 class Questions:
     def __init__(self, questionno, questiontext,answertext):
@@ -30,16 +26,17 @@ class Questions:
         self.questiontext = questiontext
         self.answertext = answertext
 
-    def buildanswer(self, state):
+    def buildanswer(self, state, selected_questions, imp_submit_btn):
         if state==True:
             selected_questions[self.questionno]=self.answertext
         else:
             del selected_questions[self.questionno] #stack overflow
 
         if bool(selected_questions)==False: #bool - stack overflow
-            submit_btn.configure(state=DISABLED) #state - stack overflow
+            imp_submit_btn.configure(state=DISABLED) #state - stack overflow
         else:
-            submit_btn.configure(state=NORMAL)
+            imp_submit_btn.configure(state=NORMAL)
+        print(selected_questions)
 
 def completeanswer(planet_ind):
     answerstring = ''
@@ -47,6 +44,7 @@ def completeanswer(planet_ind):
     answertext2 =''
     sorted_questions = dict(sorted(selected_questions.items()))
     planet_data = planets[planet_ind].getanswers()
+    print(planet_data)
     qu_keys = list(sorted_questions.keys())
     qu_ind = ''
     
@@ -91,7 +89,7 @@ def on_cancel():
     planet_var.set('Mercury')
 
 def on_click(state,qu_ind):
-    questions[qu_ind].buildanswer(state)
+    questions[qu_ind].buildanswer(state, selected_questions,submit_btn)
 
 
 if __name__ == "__main__":
