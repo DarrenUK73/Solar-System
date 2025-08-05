@@ -37,13 +37,12 @@ class Questions:
         else:
             imp_submit_btn.configure(state=NORMAL)
 
-def completeanswer(planet_ind,selected_questions,planets):
-    print(planets)
+
+def completeanswer(selected_questions,planet_data):
     answerstring = ''
     answertext1 =''
     answertext2 =''
     sorted_questions = dict(sorted(selected_questions.items()))
-    planet_data = planets[planet_ind].getanswers()
     qu_keys = list(sorted_questions.keys())
     qu_ind = ''
     
@@ -59,9 +58,8 @@ def on_submit():
     # check the planet is valid before proceeding
     if planet_var.get() in list(planet_dict.keys()):
         ind = planet_dict[planet_var.get()]
-
-        answerstring = completeanswer(ind,selected_questions,planets)
-        print(answerstring)
+        planet_data = planets[ind].getanswers()
+        answerstring = completeanswer(selected_questions,planet_data)
         messagebox.showinfo(
             title='Answers',
             message=f'Here is the result of you enquiry for planet {planet_var.get()}',
