@@ -7,7 +7,7 @@ class PlanetsTestCase(unittest.TestCase):
     def setUp(self):
         self.selected_planet = Planets('Mars','6.4171×10^23', '2', '2,1.52 AU', '144.4 million km^2', '1.88 Earth Years', ['Phobos,Deimos'])
     
-    def test_answers(self):
+    def test_answers(self): 
         planet_data = self.selected_planet.getanswers()
         assert planet_data == ['6.4171×10^23', '2', '2,1.52 AU', '144.4 million km^2', '1.88 Earth Years', ['Phobos,Deimos']]
 

@@ -123,7 +123,7 @@ if __name__ == "__main__":
     title = tk.Label(root, text='Solar System Knowledge Base', font=('Arial 16 bold'),bg='black',fg='blue')
     title.grid(columnspan=2)
 
-    # initialise the combo box 
+    # initialise the combo box
     planet_var = tk.StringVar(value='Mercury')
     planet_label = tk.Label(root, text='Please select a planet')
 
